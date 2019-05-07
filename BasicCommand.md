@@ -77,3 +77,40 @@ git管理的是修改,git add将文件的修改提交到暂存区,git commit将�
 	git reset --hard HEAD^	#回退到提交前的版本
 git rm <file>	#删除一个文件(若先已经删除一个文件, git add和git rm效果相同)
 ```
+## 6.分支管理
+```
+在Git中HEAD指向当前分支,而分支则指向提交(可以在.git目录中查看HEAD文件)
+```
+![branch1](/imgs/02.png "HEAD、分支关系")
+```
+查看分支：
+	git branch
+	git branch -av
+创建分支：
+	git branc <name>
+切换分支：
+	git checkout <name>
+创建并切换分支：
+	git checkout -b <name>
+合并某分支到当前分支(Fast-forward)：
+	git merge <name>
+删除分支：
+	git branch -d <name>
+	git branch -D <name>	#删除一个没有被合并过的分支,-D表示强行删除
+```
+![branch2](/imgs/03.png "创建并切换到新分支")
+![branch3](/imgs/04.png "合并分支")
+```
+当Git无法自动合并分支是,必须先解决冲突。解决冲突后再提交,完成合并
+	解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交
+	git log --graph或者gitk图形工具可以查看分支合并图
+
+合并分支时禁用Fast-forward
+	git merge --no-ff -m <message> <branch_name>
+
+修复bug时,会通过创建临时的bug分支修复,修复完成后合并删除
+如果接到紧急的修复bug任务,但当前手头分支的开发工作尚未完成无法提交时
+	git stash	#把现场储藏起来,之后恢复
+	git stash list  #查看存储起来的工作现场
+	git stash pop  #恢复的同时把stash内容也删除
+```
