@@ -87,7 +87,7 @@ git rm <file>	#删除一个文件(若先已经删除一个文件, git add和git 
 	git branch
 	git branch -av
 创建分支：
-	git branc <name>
+	git branch <name>
 切换分支：
 	git checkout <name>
 创建并切换分支：
@@ -113,4 +113,46 @@ git rm <file>	#删除一个文件(若先已经删除一个文件, git add和git 
 	git stash	#把现场储藏起来,之后恢复
 	git stash list  #查看存储起来的工作现场
 	git stash pop  #恢复的同时把stash内容也删除
+```
+
+## 7.远程仓库
+```
+本地仓库和远程GitHub仓库实现ssh传输需要先设置Key
+	ssh -t rsa -C "youremail@example.com"  #生成ssh公钥和私钥,存在与用户主目录下.ssh目录中
+将本地仓库和远程仓库关联
+	git remote add git@github.com:LullabyXgl/Learn-Git.git
+关联后,便可以将本地仓库的内容推送的远程仓库
+	git push -u origin master	#第一次推送时加选项-u
+	git push origin master
+也可以从远程仓库克隆一个仓库到本地
+	git clone git@github.com:LullabyXgl/Learn-Git.git  #克隆后的本地仓库会自动和远程仓库关联
+克隆之后,本地默认只能看到master分支,在本地创建和远程分支对应的分支
+	git checkout -b branch-name origin/branch-name  #本地和远程分支的名称最好一致
+抓取远程分支的新提交
+	git pull
+git pull 拉取失败时,需要建立本地分支和远程分支的关联
+	git branch --set-upstream branch-name origin/branch-name
+查看远程仓库的信息
+	git remote
+	git remote -v  #使用-v选项查看更详细的信息
+删除关联的远端仓库
+	git rm origin
+```
+
+## 8.标签tag
+```
+发布一个版本时,通常需要再版本库打一个标签(tag),便于根据版本标签找到对应的commit
+创建标签
+	git tag <tagname>  #默认新建的标签打在HEAD指向的commit上
+	git tag <tagname> commit_id  #在指定的commit上打标签
+	git tag -a <tagname> -m <message> commit_id  #-a指定标签名,-m指定说明文字
+查看标签
+	git tag  #查看标签,标签是按字母排序的
+	git show <tagname>  #查看标签的详细信息
+创建的标签都只存储在本地,不会自动推送到远程,推送标签到到远程
+	git push origin <tagname>  #推送一个本地标签
+	git push origin --tags  #推送全部未推送过的本地标签
+删除标签
+	git tag -d <tagname>  #删除一个本地标签
+	git push origin :refs/tags/<tagname>  #先删除本地标签后,使用该命令删除远端标签
 ```
