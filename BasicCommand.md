@@ -28,8 +28,9 @@
 ## 3.工作区、暂存区、版本库
 ```
 用git status查看当前repository的状态
-git diff 查看的修改内容
+git diff 查看的修改内容(默认是查看工作区和暂存区的区别)
 	git diff HEAD -- <file>  #可以查看工作区和版本库里最新版本的区别
+	git diff HEAD HEAD^  #查看两次提交(commit)的区别
 1.工作区(Working Directory)
 	工作区即是电脑中可以看到的项目根目录
 2.版本库(Repository)
@@ -92,6 +93,7 @@ git rm <file>	#删除一个文件(若先已经删除一个文件, git add和git 
 	git checkout <name>
 创建并切换分支：
 	git checkout -b <name>
+	git checkout -b <name> <basename>  #basename表示基于某个分支或commit创建这个分支
 合并某分支到当前分支(Fast-forward)：
 	git merge <name>
 删除分支：
@@ -101,7 +103,7 @@ git rm <file>	#删除一个文件(若先已经删除一个文件, git add和git 
 ![branch2](/imgs/03.png "创建并切换到新分支")
 ![branch3](/imgs/04.png "合并分支")
 ```
-当Git无法自动合并分支是,必须先解决冲突。解决冲突后再提交,完成合并
+当Git无法自动合并分支时,必须先解决冲突。解决冲突后再提交,完成合并
 	解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交
 	git log --graph或者gitk图形工具可以查看分支合并图
 
@@ -118,7 +120,7 @@ git rm <file>	#删除一个文件(若先已经删除一个文件, git add和git 
 ## 7.远程仓库
 ```
 本地仓库和远程GitHub仓库实现ssh传输需要先设置Key
-	ssh -t rsa -C "youremail@example.com"  #生成ssh公钥和私钥,存在与用户主目录下.ssh目录中
+	ssh-keygen -t rsa -C "youremail@example.com"  #生成ssh公钥和私钥,存在与用户主目录下.ssh目录中
 将本地仓库和远程仓库关联
 	git remote add git@github.com:LullabyXgl/Learn-Git.git
 关联后,便可以将本地仓库的内容推送的远程仓库
@@ -136,7 +138,7 @@ git pull 拉取失败时,需要建立本地分支和远程分支的关联
 	git remote
 	git remote -v  #使用-v选项查看更详细的信息
 删除关联的远端仓库
-	git rm origin
+	git remote rm origin
 ```
 
 ## 8.标签tag
